@@ -7,6 +7,21 @@ import {
   transferGate,
 } from "./pause.ts";
 
+describe("createGuard", () => {
+  it("starts unpaused", () => {
+    const g = createGuard("tokenadmin");
+    assert.equal(g.paused, false);
+    assert.equal(g.msig, "eosio.msig");
+  });
+
+  it("refuses admin equal to msig", () => {
+    assert.throws(
+      () => createGuard("eosio.msig", "eosio.msig"),
+      /admin and msig must differ/,
+    );
+  });
+});
+
 describe("pause / unpause", () => {
   it("admin pauses; msig unpauses", () => {
     let g = createGuard("tokenadmin");
@@ -39,6 +54,11 @@ describe("pause / unpause", () => {
     g = pause(g, "tokenadmin");
     assert.throws(() => pause(g, "tokenadmin"), /already paused/);
   });
+
+  it("unpause while live is refused", () => {
+    const g = createGuard("tokenadmin");
+    assert.throws(() => unpause(g, "tokenadmin"), /not paused/);
+  });
 });
 
 describe("transferGate", () => {
@@ -56,5 +76,10 @@ describe("transferGate", () => {
   it("refuses zero amount", () => {
     const g = createGuard("tokenadmin");
     assert.throws(() => transferGate(g, "alice", "bob", 0n), /positive/);
+  });
+
+  it("refuses from equal to to", () => {
+    const g = createGuard("tokenadmin");
+    assert.throws(() => transferGate(g, "alice", "alice", 1n), /must differ/);
   });
 });
