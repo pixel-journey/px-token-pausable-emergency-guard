@@ -6,7 +6,9 @@
 
 **One-sentence goal:** Teach a **pause switch** for transfers where **only admin pauses**, and **admin or `eosio.msig` unpauses**, so recovery is not a single-key deadlock.
 
-**Real code:** `npm test`. **Not** a full token, **not** wasm, **not** a live msig proposal.
+**Real code:** `npm test`. **Not** a full token, **not** wasm in this repo, **not** a live msig proposal.
+
+**Production mirror (C++ → wasm):** [wax-contract-compiler `pxguard`](https://github.com/pixel-journey/wax-contract-compiler/tree/main/contracts/pxguard) — [run 24](https://github.com/pixel-journey/wax-contract-compiler/actions/runs/42821960554), wasm SHA256 `da54a7088823f5f0a6edc0a690c64b825efc4739253da636806997677f7b6f6a`, audit 0 errors / 0 warnings. **Not deployed.**
 
 ## What you can learn
 
@@ -76,7 +78,7 @@ guard = unpause(guard, "eosio.msig");
 
 ```
 admin pause / admin-or-msig unpause     [tested in memory]
-    → require_auth on those actions       [not in this repo]
+    → require_auth on those actions       [C++ mirror: pxguard]
     → eosio.msig proposal execution        [not in this repo]
     → transfer that also checks balances   [not in this repo]
 ```
@@ -85,6 +87,7 @@ See [SECURITY.md](SECURITY.md) and [EDUCATION.md](EDUCATION.md).
 
 ## Related
 
+- Production compile: [wax-contract-compiler / pxguard](https://github.com/pixel-journey/wax-contract-compiler/tree/main/contracts/pxguard)
 - Template note: `PAUSE-RECOVERY.md` on `px-antelope-contract-template`
 - Vault index: `px-contract-examples-vault`
 
