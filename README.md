@@ -1,29 +1,31 @@
-# Pause is tight. Unpause is not a single key.
+# Pause transfers with an msig recovery path
 
 > **Domain:** emergency pause guard  
 > **Sources:** [SOURCES.md](SOURCES.md)  
 > **Catalog:** [px-contract-examples-vault](https://github.com/pixel-journey/px-contract-examples-vault)
 
-**Goal:** A **pause switch** for transfers where **only admin pauses**, and **admin or `eosio.msig` unpauses**, so recovery is not a single-key deadlock.
+**Goal:** Admin may **pause** transfers; **admin or `eosio.msig`** may unpause so a lost admin key is not a permanent deadlock.
 
-**Code under test:** `npm test` (unit + timeline composition). This is a gate, not a full token, and not a live msig proposal.
+**Code under test:** `npm test` (unit + lifecycle composition).
 
-**Production mirror:** [pxguard](https://github.com/pixel-journey/wax-contract-compiler/tree/main/contracts/pxguard) — [run 24](https://github.com/pixel-journey/wax-contract-compiler/actions/runs/42821960554), wasm prefix `da54a7088823…`, audit 0/0. **Not deployed.**
+## Learning materials
 
-**Docs:** [docs.eosnetwork.com](https://docs.eosnetwork.com/), [docs.wax.io](https://docs.wax.io/).
-
-## Composition
-
-`pause.composition.test.ts` walks live → pause → blocked transfer → **msig recovery** → live again. Successful transfer count only advances when the gate passes. Random accounts never pause or unpause.
+| Doc | Role |
+| --- | --- |
+| [EDUCATION.md](EDUCATION.md) | Beginner → masterclass |
+| [WORKED-EXAMPLES.md](WORKED-EXAMPLES.md) | Pause, msig unpause, refusals |
+| [TIPS.md](TIPS.md) | Escape hatch design |
+| [SECURITY.md](SECURITY.md) | Authority matrix |
+| [SOURCES.md](SOURCES.md) | msig docs |
 
 ## What is true (executed)
 
 | Rule | Result |
 | --- | --- |
-| Admin pauses | `paused: true` |
-| Admin or `eosio.msig` unpauses | live again |
-| Second pause / transfer while paused / zero amount | refused |
-| Timeline | okTransfers only counts gated successes |
+| Only admin pauses | enforced |
+| Admin or msig unpauses | enforced |
+| transferGate while paused | refused |
+| Composition | full pause/recover cycle |
 
 ```bash
 npm test

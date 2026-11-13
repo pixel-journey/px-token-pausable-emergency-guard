@@ -1,9 +1,10 @@
-# Security notes
+# Security notes — pause guard
 
-| Issue | Lab mitigation |
-|-------|----------------|
-| Anyone pauses | admin-only pause |
-| Single-key unpause deadlock | msig may unpause |
-| Transfers during incident | `transferGate` refuses when paused |
+| Mitigated | Behavior |
+| --- | --- |
+| Non-admin pause | refused |
+| Non-admin/non-msig unpause | refused |
+| Transfers while paused | refused |
+| admin === msig at create | refused |
 
-Production still needs real `require_auth`, table storage, and careful definition of which actions pause covers (transfer only vs issue/retire).
+Production: real `require_auth`, link auth for msig, optional pause of mint/retire, event logging.
