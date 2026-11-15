@@ -1,27 +1,30 @@
-# Worked examples — emergency pause
+# Worked examples — pausable transfer gate
 
-Admin `tokenadmin`, msig `eosio.msig`. Admin and msig **must differ** at create.
+Admin `tokenadmin`, default msig `eosio.msig`. Admin and msig **must differ** on create.
 
-## Roles
+## Pause / unpause
 
-| Action | Who |
-| --- | --- |
-| pause | admin only |
-| unpause | admin **or** msig |
-
-Alice cannot pause or unpause. Double pause → `already paused`. Unpause while live → `not paused`.
+| Actor | Action | Result |
+| --- | --- | --- |
+| tokenadmin | pause | paused true |
+| eosio.msig | unpause | paused false |
+| tokenadmin | unpause | also allowed |
+| alice | pause | only admin may pause |
+| alice | unpause | admin or msig |
+| tokenadmin | pause twice | already paused |
+| tokenadmin | unpause while live | not paused |
 
 ## transferGate
 
-Live: alice→bob ok. Paused: throws `paused`. Zero amount and self-transfer still refused even when paused (`positive` / `must differ`).
+Live: alice→bob amount 1 ok. Paused: throws `paused`. Amount 0 → positive. Self-transfer → must differ.
 
 ## Composition timeline
 
 1. Two live transfers → `okTransfers` 2.
-2. Pause → third transfer blocked; count stays 2.
-3. Alice cannot unpause; `eosio.msig` can.
-4. Transfer resumes; count 3; `paused` false.
+2. Pause → further transfer refused; count stays 2.
+3. Alice cannot unpause; **eosio.msig** unpauses.
+4. Third transfer succeeds; paused false.
 
-Admin alone can also unpause. Non-admin never pauses; double-pause never increments success count.
+Admin-only pause/unpause path also works without msig. Failed pauses never increment `okTransfers`.
 
-No token balances in this lab — only the gate.
+No token balances in this lab — only the emergency gate.

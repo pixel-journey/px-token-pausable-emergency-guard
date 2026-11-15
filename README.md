@@ -1,31 +1,11 @@
-# Pause transfers with an msig recovery path
+# Emergency pause with msig-friendly unpause
 
-> **Domain:** emergency pause guard  
-> **Sources:** [SOURCES.md](SOURCES.md)  
-> **Catalog:** [px-contract-examples-vault](https://github.com/pixel-journey/px-contract-examples-vault)
-
-**Goal:** Admin may **pause** transfers; **admin or `eosio.msig`** may unpause so a lost admin key is not a permanent deadlock.
-
-**Code under test:** `npm test` (unit + lifecycle composition).
-
-## Learning materials
+Admin pauses transfers; admin **or** msig unpauses so a lost admin key is not a permanent deadlock. Pure TypeScript gate; no token ledger here.
 
 | Doc | Role |
 | --- | --- |
-| [EDUCATION.md](EDUCATION.md) | Beginner → masterclass |
-| [WORKED-EXAMPLES.md](WORKED-EXAMPLES.md) | Pause, msig unpause, refusals |
-| [TIPS.md](TIPS.md) | Escape hatch design |
-| [SECURITY.md](SECURITY.md) | Authority matrix |
-| [SOURCES.md](SOURCES.md) | msig docs |
-
-## What is true (executed)
-
-| Rule | Result |
-| --- | --- |
-| Only admin pauses | enforced |
-| Admin or msig unpauses | enforced |
-| transferGate while paused | refused |
-| Composition | full pause/recover cycle |
+| [EDUCATION.md](EDUCATION.md) | Why split pause/unpause authority |
+| [WORKED-EXAMPLES.md](WORKED-EXAMPLES.md) | Timeline from tests |
 
 ```bash
 npm test
