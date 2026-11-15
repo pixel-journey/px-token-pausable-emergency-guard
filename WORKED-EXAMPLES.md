@@ -1,25 +1,27 @@
-# Worked examples — pausable guard
+# Worked examples — emergency pause
 
-## Example A — admin pause
+Admin `tokenadmin`, msig `eosio.msig`. Admin and msig **must differ** at create.
 
-```text
-createGuard("admin.acc", "eosio.msig")
-pause(admin) → paused true
-transferGate(...) → "transfers paused"
-```
+## Roles
 
-## Example B — admin unpause
+| Action | Who |
+| --- | --- |
+| pause | admin only |
+| unpause | admin **or** msig |
 
-unpause(admin) → paused false; transferGate allows positive amount to different account.
+Alice cannot pause or unpause. Double pause → `already paused`. Unpause while live → `not paused`.
 
-## Example C — msig recovery
+## transferGate
 
-Admin key “lost”: unpause(`eosio.msig`) succeeds. Stranger cannot unpause.
+Live: alice→bob ok. Paused: throws `paused`. Zero amount and self-transfer still refused even when paused (`positive` / `must differ`).
 
-## Example D — idempotent errors
+## Composition timeline
 
-Double pause → already paused. Unpause when live → not paused.
+1. Two live transfers → `okTransfers` 2.
+2. Pause → third transfer blocked; count stays 2.
+3. Alice cannot unpause; `eosio.msig` can.
+4. Transfer resumes; count 3; `paused` false.
 
-## Example E — composition lifecycle
+Admin alone can also unpause. Non-admin never pauses; double-pause never increments success count.
 
-Live → pause → refuse transfer → msig unpause → transfer ok → admin pause again.
+No token balances in this lab — only the gate.
