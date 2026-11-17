@@ -1,11 +1,14 @@
-# Emergency pause with msig-friendly unpause
+# Pause with an msig recovery path
 
-Admin pauses transfers; admin **or** msig unpauses so a lost admin key is not a permanent deadlock. Pure TypeScript gate; no token ledger here.
+Educational guard: admin pauses user transfers; admin **or** `eosio.msig` unpauses. The string is not a live multisig. No balances move.
 
 | Doc | Role |
 | --- | --- |
-| [EDUCATION.md](EDUCATION.md) | Why split pause/unpause authority |
-| [WORKED-EXAMPLES.md](WORKED-EXAMPLES.md) | Timeline from tests |
+| [EDUCATION.md](EDUCATION.md) | Beginner → masterclass |
+| [WORKED-EXAMPLES.md](WORKED-EXAMPLES.md) | Pause / unpause tables |
+| [TIPS.md](TIPS.md) | Deadlock and coverage |
+| [SECURITY.md](SECURITY.md) | Gaps |
+| [SOURCES.md](SOURCES.md) | eosio.msig |
 
 ```bash
 npm test
