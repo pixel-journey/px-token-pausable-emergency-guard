@@ -25,4 +25,4 @@ Do not copy [template pause](https://github.com/pixel-journey/px-antelope-contra
 | [fee splitter](https://github.com/pixel-journey/px-treasury-incoming-fee-splitter) | Config changes under pause |
 | [dex tax](https://github.com/pixel-journey/px-token-dex-differentiated-tax) | Rate changes under admin |
 | [invariant kit](https://github.com/pixel-journey/px-invariant-kit) | Shared gates |
-| [treasury path](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/TREASURY-TOKEN-LEARNING-PATH.md) | Curriculum order |
+| `px-contract-examples-vault` (private; not this public course) | Curriculum order |
