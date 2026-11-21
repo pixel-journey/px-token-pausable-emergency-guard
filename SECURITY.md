@@ -24,11 +24,20 @@ Recovery is the string `eosio.msig` in tests. That is **not** a completed multis
 
 ## Attack angles
 
-1. Single key can pause and is the only unpause path (lost key = permanent freeze).
-2. Pause blocks the recovery action itself.
-3. Trusting action data `caller == "eosio.msig"` without permission checks.
-4. Pausing transfers but leaving an unprotected payout path open.
+1. Single key can pause and is the only unpause path (lost key = permanent freeze).  
+2. Pause blocks the recovery action itself.  
+3. Trusting action data `caller == "eosio.msig"` without permission checks.  
+4. Pausing transfers but leaving an unprotected payout path open.  
+5. Setting admin == recovery so one key can freeze forever.
 
 ## Honesty limits
 
-No balances move. Related: [token ledger](https://github.com/pixel-journey/px-token-balance-ledger) · [eosio.msig](https://github.com/eosio/eosio.contracts).
+No balances move. Flag is a teaching model only.
+
+| Sibling | Distinction |
+| --- | --- |
+| [token ledger](https://github.com/pixel-journey/px-token-balance-ledger) | Conservation of balances |
+| [fee splitter](https://github.com/pixel-journey/px-treasury-incoming-fee-splitter) | Incoming bps legs |
+| [multi-sig builder](https://github.com/pixel-journey/wax-multi-sig-proposal-builder-and-simulator) | Proposal sketch, not live msig |
+
+[eosio.msig](https://github.com/eosio/eosio.contracts) · [docs.wax.io](https://docs.wax.io/).
