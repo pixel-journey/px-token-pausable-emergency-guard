@@ -5,6 +5,13 @@
 | [eosio.msig in eosio.contracts](https://github.com/eosio/eosio.contracts) | How a proposal can satisfy an authority |
 | [docs.wax.io](https://docs.wax.io/) | WAX accounts and permissions |
 | [docs.eosnetwork.com](https://docs.eosnetwork.com/) | `require_auth`, permissions |
+| [msig simulator](https://github.com/pixel-journey/wax-multi-sig-proposal-builder-and-simulator) | Named proposals vs this gate |
+| [wharfkit/skill](https://github.com/wharfkit/skill) | SessionKit if a host later signs pause/unpause |
+| [ANTELOPE-PORTABILITY](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/ANTELOPE-PORTABILITY.md) | Auth patterns port; account names do not |
+
+```bash
+git clone https://github.com/wharfkit/skill.git ~/.claude/skills/wharfkit
+```
 
 ## Product facts locked by this lab
 
@@ -16,6 +23,10 @@
 - This lab does **not** propose an msig transaction and does **not** move balances.
 
 Do not copy [template pause](https://github.com/pixel-journey/px-antelope-contract-template) into a token and assume transfers stop. The template only returns a boolean.
+
+## Portability
+
+Split-key pause/unpause ports across Antelope. Account names, msig layout, and chain id are local.
 
 ## Related labs
 
